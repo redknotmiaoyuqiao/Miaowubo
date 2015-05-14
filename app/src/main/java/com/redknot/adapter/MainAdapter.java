@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.redknot.javabean.Status;
 import com.redknot.miaowubo.R;
@@ -45,6 +46,10 @@ public class MainAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = null;
         view = inflater.inflate(R.layout.listview_main, null);
+
+        TextView text = (TextView)view.findViewById(R.id.listview_main_text);
+        text.setText(this.data.get(position).getText());
+
         return view;
     }
 }

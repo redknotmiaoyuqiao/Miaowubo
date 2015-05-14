@@ -17,16 +17,18 @@ public class LogoActivity extends ActionBarActivity {
     private ImageView logo;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        Animation animation = new AlphaAnimation(0.0f,1.0f);
-        animation.setDuration(2000);
+        logo = (ImageView) findViewById(R.id.logo);
 
-        logo.setAnimation(animation);
+        Animation anim = new AlphaAnimation(0.0f,1.0f);
+        anim.setDuration(2000);
 
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        logo.setAnimation(anim);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -44,5 +46,7 @@ public class LogoActivity extends ActionBarActivity {
 
             }
         });
+
+
     }
 }
