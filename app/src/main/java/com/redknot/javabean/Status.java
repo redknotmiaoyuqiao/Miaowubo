@@ -1,5 +1,7 @@
 package com.redknot.javabean;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,14 +28,41 @@ public class Status {
     private int comments_count;
     private int attitudes_count;
 
+    private User user;
 
-    public Status(JSONObject jo){
+    public Status(){
+
+    }
+
+    public Status(JSONObject jo) {
         try {
-            String text = jo.getString("text");
-            this.setText(text);
-        }catch(JSONException e){
+            this.text = jo.getString("text");
+            this.created_at = jo.getString("created_at");
+            this.source = jo.getString("source");
+
+            this.comments_count = jo.getInt("comments_count");
+            this.reposts_count = jo.getInt("reposts_count");
+            this.attitudes_count = jo.getInt("attitudes_count");
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        try {
+            JSONObject user = jo.getJSONObject("user");
+            this.setUser(new User(user));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getCreated_at() {

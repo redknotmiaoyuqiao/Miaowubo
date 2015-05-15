@@ -1,13 +1,18 @@
 package com.redknot.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.com.damiao.web.view.WebImageView;
 import com.redknot.javabean.Status;
+import com.redknot.javabean.User;
 import com.redknot.miaowubo.R;
 
 import java.util.List;
@@ -41,15 +46,42 @@ public class MainAdapter extends BaseAdapter {
         return position;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = null;
         view = inflater.inflate(R.layout.listview_main, null);
 
-        TextView text = (TextView)view.findViewById(R.id.listview_main_text);
-        text.setText(this.data.get(position).getText());
+        Status status = this.data.get(position);
+        User user = status.getUser();
+
+        TextView text = (TextView) view.findViewById(R.id.listview_main_text);
+        TextView name = (TextView) view.findViewById(R.id.listview_main_name);
+        TextView created_at = (TextView) view.findViewById(R.id.listview_main_created_at);
+        TextView source = (TextView) view.findViewById(R.id.listview_main_source);
+
+        TextView reposts_count = (TextView)view.findViewById(R.id.listview_main_reposts_count);
+        TextView comments_count = (TextView)view.findViewById(R.id.listview_main_comments_count);
+        TextView attitudes_count = (TextView)view.findViewById(R.id.listview_main_attitudes_count);
+
+
+        WebImageView img = (WebImageView) view.findViewById(R.id.listview_main_img);
+        img.setUrl(user.getProfile_image_url());
+
+        text.setText(status.getText());
+        created_at.setText(status.getCreated_at());
+        source.setText(status.getSource());
+
+
+        reposts_count.setText(status.getReposts_count() + "");
+        comments_count.setText(status.getComments_count() + "");
+        attitudes_count.setText(status.getAttitudes_count() + "");
+
+        name.setText(user.getName());
+
 
         return view;
     }
+
 }
