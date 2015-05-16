@@ -1,16 +1,13 @@
 package com.redknot.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.com.damiao.web.view.WebImageView;
+import com.damiao.network.view.NetWorkImageView;
 import com.redknot.javabean.Status;
 import com.redknot.javabean.User;
 import com.redknot.miaowubo.R;
@@ -65,8 +62,7 @@ public class MainAdapter extends BaseAdapter {
         TextView comments_count = (TextView)view.findViewById(R.id.listview_main_comments_count);
         TextView attitudes_count = (TextView)view.findViewById(R.id.listview_main_attitudes_count);
 
-
-        WebImageView img = (WebImageView) view.findViewById(R.id.listview_main_img);
+        NetWorkImageView img = (NetWorkImageView)view.findViewById(R.id.listview_main_img);
         img.setUrl(user.getProfile_image_url());
 
         text.setText(status.getText());

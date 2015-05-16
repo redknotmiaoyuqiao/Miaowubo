@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     
-    <com.com.damiao.web.view.WebImageView
-        android:id="@+id/listview_main_img"
-        android:layout_width="30dip"
-        android:layout_height="30dip" />
+    <com.damiao.network.view.NetWorkImageView
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:id="@+id/listview_main_img"/>
 
     <TextView
         android:id="@+id/listview_main_name"

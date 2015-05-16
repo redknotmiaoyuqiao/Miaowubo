@@ -53,15 +53,8 @@ public class MainActivity extends ActionBarActivity {
         if (token.equals("")) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
-        }
+        } else {
 
-        else {
-            mAccessToken = AccessTokenKeeper.readAccessToken(this);
-            mStatusesAPI = new StatusesAPI(this, Constants.APP_KEY, mAccessToken);
-
-            data.clear();
-            mStatusesAPI.friendsTimeline(0L, 0L, 10, 1, false, 0, false, mListener);
-            main_listview_refresh.setRefreshing(true);
         }
     }
 
@@ -80,14 +73,18 @@ public class MainActivity extends ActionBarActivity {
         main_listview_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                data.clear();
-                mStatusesAPI.friendsTimeline(0L, 0L, 10, 1, false, 0, false, mListener);
+                startWeibo();
             }
         });
-
-
     }
 
+
+    private void startWeibo() {
+        mAccessToken = AccessTokenKeeper.readAccessToken(this);
+        mStatusesAPI = new StatusesAPI(this, Constants.APP_KEY, mAccessToken);
+        mStatusesAPI.friendsTimeline(0L, 0L, 10, 1, false, 0, false, mListener);
+        main_listview_refresh.setRefreshing(true);
+    }
 
     private RequestListener mListener = new RequestListener() {
         @Override
@@ -99,11 +96,11 @@ public class MainActivity extends ActionBarActivity {
                     JSONObject statuses = new JSONObject(response);
                     JSONArray ja = statuses.getJSONArray("statuses");
 
-                    for(int i=0;i<ja.length();i++){
+                    for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
                         data.add(new Status(jo));
                     }
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

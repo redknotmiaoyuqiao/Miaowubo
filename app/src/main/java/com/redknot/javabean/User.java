@@ -15,9 +15,6 @@ public class User {
     private String name;
     private String profile_image_url;
 
-    private Bitmap profile_image;
-
-
     public User(JSONObject jo){
         try {
             this.id = jo.getInt("id");
@@ -29,15 +26,7 @@ public class User {
             e.printStackTrace();
         }
 
-        this.profile_image = null;
-    }
 
-    public Bitmap getProfile_image(){
-        return this.profile_image;
-    }
-
-    public void setProfile_image(Bitmap profile_image){
-        this.profile_image = profile_image;
     }
 
 
