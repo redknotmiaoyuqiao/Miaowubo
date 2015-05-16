@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class LoginActivity extends ActionBarActivity {
     private Oauth2AccessToken mAccessToken;
 
     private TextView tv_token;
+    private Button btn_login;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -32,18 +35,30 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
         tv_token = (TextView)findViewById(R.id.tv_token);
+        btn_login = (Button)findViewById(R.id.btn_login);
+
 
         Oauth2AccessToken token_bundle = AccessTokenKeeper.readAccessToken(LoginActivity.this);
         String token = token_bundle.getToken();
 
-        tv_token.setText(token);
+        tv_token.setText(token + "");
 
 
         mAuthInfo = new AuthInfo(this, Constants.APP_KEY,
                 Constants.REDIRECT_URL, Constants.SCOPE);
         mSsoHandler = new SsoHandler(LoginActivity.this, mAuthInfo);
 
-        mSsoHandler.authorize(new AuthListener());
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSsoHandler.authorize(new AuthListener());
+            }
+        });
+
+
+
+
+        //mSsoHandler.authorize(new AuthListener());
     }
 
     @Override

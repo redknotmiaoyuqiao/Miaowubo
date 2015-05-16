@@ -55,13 +55,14 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
         }
 
-        mAccessToken = AccessTokenKeeper.readAccessToken(this);
-        mStatusesAPI = new StatusesAPI(this, Constants.APP_KEY, mAccessToken);
+        else {
+            mAccessToken = AccessTokenKeeper.readAccessToken(this);
+            mStatusesAPI = new StatusesAPI(this, Constants.APP_KEY, mAccessToken);
 
-        data.clear();
-        mStatusesAPI.friendsTimeline(0L, 0L, 10, 1, false, 0, false, mListener);
-        main_listview_refresh.setRefreshing(true);
-
+            data.clear();
+            mStatusesAPI.friendsTimeline(0L, 0L, 10, 1, false, 0, false, mListener);
+            main_listview_refresh.setRefreshing(true);
+        }
     }
 
 
@@ -116,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onWeiboException(WeiboException e) {
 
-            Toast.makeText(MainActivity.this, "network", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, e.getMessage() + "", Toast.LENGTH_LONG).show();
             main_listview_refresh.setRefreshing(false);
         }
     };

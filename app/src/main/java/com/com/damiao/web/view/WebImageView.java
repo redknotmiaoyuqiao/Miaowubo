@@ -9,11 +9,16 @@ import android.widget.ImageView;
 
 import com.redknot.httputil.HttpUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by qiaoyao on 15/5/16.
  */
 public class WebImageView extends ImageView {
 
+
+    private static Map<String,Bitmap> res = new HashMap<String,Bitmap>();
     private String url;
 
     public WebImageView(Context context) {
@@ -32,12 +37,18 @@ public class WebImageView extends ImageView {
     }
 
     public void setUrl(String url) {
+        Bitmap b = this.res.get(url);
 
-        this.url = url;
-        MyHandle handler = null;
-        handler = new MyHandle();
-        ImageThread t = new ImageThread(url, handler);
-        new Thread(t).start();
+        if(b != null){
+            this.setImageBitmap(b);
+        }
+        else{
+            this.url = url;
+            MyHandle handler = null;
+            handler = new MyHandle();
+            ImageThread t = new ImageThread(url, handler);
+            new Thread(t).start();
+        }
     }
 
     private class ImageThread implements Runnable {
@@ -75,6 +86,7 @@ public class WebImageView extends ImageView {
             if (msg.what == 200) {
                 Bitmap bitmap = (Bitmap) msg.obj;
                 WebImageView.this.setImageBitmap(bitmap);
+                WebImageView.this.res.put(WebImageView.this.url,bitmap);
             } else {
 
             }
