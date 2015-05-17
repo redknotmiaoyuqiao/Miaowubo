@@ -1,10 +1,15 @@
 package com.redknot.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Html;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.damiao.network.view.NetWorkImageView;
@@ -23,7 +28,7 @@ public class MainAdapter extends BaseAdapter {
     private List<Status> data;
     private Context context;
 
-    public MainAdapter(List<Status> data,Context context) {
+    public MainAdapter(List<Status> data, Context context) {
         this.data = data;
         this.context = context;
     }
@@ -56,23 +61,38 @@ public class MainAdapter extends BaseAdapter {
         TextView text = (TextView) view.findViewById(R.id.listview_main_text);
         TextView name = (TextView) view.findViewById(R.id.listview_main_name);
         TextView created_at = (TextView) view.findViewById(R.id.listview_main_created_at);
-        TextView source = (TextView) view.findViewById(R.id.listview_main_source);
 
-        TextView reposts_count = (TextView)view.findViewById(R.id.listview_main_reposts_count);
-        TextView comments_count = (TextView)view.findViewById(R.id.listview_main_comments_count);
-        TextView attitudes_count = (TextView)view.findViewById(R.id.listview_main_attitudes_count);
+        TextView reposts_count = (TextView) view.findViewById(R.id.listview_main_reposts_count);
+        TextView comments_count = (TextView) view.findViewById(R.id.listview_main_comments_count);
+        TextView attitudes_count = (TextView) view.findViewById(R.id.listview_main_attitudes_count);
 
-        NetWorkImageView img = (NetWorkImageView)view.findViewById(R.id.listview_main_img);
+        RelativeLayout listview_main_retweeted_status_layout = (RelativeLayout) view.findViewById(R.id.listview_main_retweeted_status_layout);
+        if (status.getRetweeted_status() == null) {
+            listview_main_retweeted_status_layout.setVisibility(View.INVISIBLE);
+        } else {
+            Status s = status.getRetweeted_status();
+            TextView t = new TextView(this.context);
+            listview_main_retweeted_status_layout.addView(t);
+            listview_main_retweeted_status_layout.setBackgroundColor(Color.rgb(255, 255, 255));
+            listview_main_retweeted_status_layout.setPadding(16, 16, 16, 16);
+            t.setAutoLinkMask(Linkify.ALL);
+            
+
+
+            t.setText(s.getUser().getName() + "：" + s.getText());
+        }
+
+
+        NetWorkImageView img = (NetWorkImageView) view.findViewById(R.id.listview_main_img);
         img.setUrl(user.getProfile_image_url());
 
         text.setText(status.getText());
         created_at.setText(status.getCreated_at());
-        source.setText(status.getSource());
 
 
-        reposts_count.setText(status.getReposts_count() + "");
-        comments_count.setText(status.getComments_count() + "");
-        attitudes_count.setText(status.getAttitudes_count() + "");
+        reposts_count.setText("转发：" + status.getReposts_count() + "");
+        comments_count.setText("评论：" + status.getComments_count() + "");
+        attitudes_count.setText("点赞：" + status.getAttitudes_count() + "");
 
         name.setText(user.getName());
 

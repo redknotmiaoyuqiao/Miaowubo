@@ -7,6 +7,8 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.damiao.network.http.HttpUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +17,7 @@ import java.util.Map;
  */
 public class NetWorkImageView extends ImageView {
 
-    private Map<String, Bitmap> res = new HashMap<String, Bitmap>();
-    private String url = "";
+    public static Map<String, Bitmap> res = new HashMap<String, Bitmap>();
 
     public NetWorkImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -34,17 +35,20 @@ public class NetWorkImageView extends ImageView {
     }
 
     public void setUrl(String url) {
-        if (!url.equals("")) {
-            Bitmap bitmap = this.res.get(url);
 
-            if (bitmap == null) {
-                MyHandler handler = new MyHandler();
+        if(!url.equals("")){
+            Bitmap bitmap = res.get(url);
+
+            if(bitmap != null){
+                this.setImageBitmap(bitmap);
+            }else{
+                MyHandler handler = new MyHandler(url);
                 ImageThread img = new ImageThread(url, handler);
                 new Thread(img).start();
-            } else {
-                this.setImageBitmap(bitmap);
             }
         }
+
+
     }
 
     private class ImageThread implements Runnable {
@@ -63,7 +67,11 @@ public class NetWorkImageView extends ImageView {
             Message msg = new Message();
 
             try {
+                HttpUtil httpUtil = new HttpUtil();
+                Bitmap bitmap = httpUtil.loadImage(this.url);
+
                 msg.what = 200;
+                msg.obj = bitmap;
             } catch (Exception e) {
                 msg.what = 400;
             } finally {
@@ -73,13 +81,20 @@ public class NetWorkImageView extends ImageView {
     }
 
     private class MyHandler extends Handler {
+
+        private String url;
+
+        public MyHandler(String url){
+            this.url = url;
+        }
+
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 200) {
                 Bitmap bitmap = (Bitmap) msg.obj;
-                if (bitmap != null && (!NetWorkImageView.this.url.equals(""))) {
-                    NetWorkImageView.this.res.put(NetWorkImageView.this.url, bitmap);
+                if (bitmap != null) {
                     NetWorkImageView.this.setImageBitmap(bitmap);
+                    res.put(this.url,bitmap);
                 }
             } else if (msg.what == 400) {
 

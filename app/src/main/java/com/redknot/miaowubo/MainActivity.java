@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
     private void startWeibo() {
         mAccessToken = AccessTokenKeeper.readAccessToken(this);
         mStatusesAPI = new StatusesAPI(this, Constants.APP_KEY, mAccessToken);
-        mStatusesAPI.friendsTimeline(0L, 0L, 10, 1, false, 0, false, mListener);
+        mStatusesAPI.friendsTimeline(0L, 0L, 40, 1, false, 0, false, mListener);
         main_listview_refresh.setRefreshing(true);
     }
 
@@ -96,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
                     JSONObject statuses = new JSONObject(response);
                     JSONArray ja = statuses.getJSONArray("statuses");
 
+                    data.clear();
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
                         data.add(new Status(jo));

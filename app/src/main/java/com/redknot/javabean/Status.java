@@ -28,11 +28,15 @@ public class Status {
     private int comments_count;
     private int attitudes_count;
 
+    private Status retweeted_status;
+
     private User user;
 
     public Status(){
 
     }
+
+
 
     public Status(JSONObject jo) {
         try {
@@ -52,6 +56,14 @@ public class Status {
             JSONObject user = jo.getJSONObject("user");
             this.setUser(new User(user));
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject retweeted_status = jo.getJSONObject("retweeted_status");
+            this.setRetweeted_status(new Status(retweeted_status));
+        } catch (JSONException e) {
+            this.setRetweeted_status(null);
             e.printStackTrace();
         }
 
@@ -199,6 +211,14 @@ public class Status {
 
     public void setIn_reply_to_screen_name(String in_reply_to_screen_name) {
         this.in_reply_to_screen_name = in_reply_to_screen_name;
+    }
+
+    public Status getRetweeted_status() {
+        return retweeted_status;
+    }
+
+    public void setRetweeted_status(Status retweeted_status) {
+        this.retweeted_status = retweeted_status;
     }
 
 
