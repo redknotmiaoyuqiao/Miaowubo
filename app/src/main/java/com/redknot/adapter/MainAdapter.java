@@ -1,6 +1,8 @@
 package com.redknot.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Html;
 import android.text.util.Linkify;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.damiao.network.view.NetWorkImageView;
 import com.redknot.javabean.Status;
 import com.redknot.javabean.User;
+import com.redknot.miaowubo.ImgActivity;
 import com.redknot.miaowubo.R;
 
 import java.util.List;
@@ -76,11 +79,24 @@ public class MainAdapter extends BaseAdapter {
             listview_main_retweeted_status_layout.setBackgroundColor(Color.rgb(255, 255, 255));
             listview_main_retweeted_status_layout.setPadding(16, 16, 16, 16);
             t.setAutoLinkMask(Linkify.ALL);
-            
+
 
 
             t.setText(s.getUser().getName() + "：" + s.getText());
         }
+
+        if(status.getThumbnail_pic() != null){
+            listview_main_retweeted_status_layout.setVisibility(View.VISIBLE);
+
+            NetWorkImageView img = new NetWorkImageView(this.context);
+
+            listview_main_retweeted_status_layout.addView(img);
+            img.setUrl(status.getThumbnail_pic());
+
+            img.setOnClickListener(new ImgOnClickListener(status.getOriginal_pic()));
+        }
+
+
 
 
         NetWorkImageView img = (NetWorkImageView) view.findViewById(R.id.listview_main_img);
@@ -98,6 +114,21 @@ public class MainAdapter extends BaseAdapter {
 
 
         return view;
+    }
+
+    private class ImgOnClickListener implements View.OnClickListener{
+
+        private String img;
+
+        public ImgOnClickListener(String img){
+            this.img = img;
+        }
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, ImgActivity.class);
+            intent.putExtra("img_url",this.img);
+            context.startActivity(intent);
+        }
     }
 
 }

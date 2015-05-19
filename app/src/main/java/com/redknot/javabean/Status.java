@@ -67,6 +67,16 @@ public class Status {
             e.printStackTrace();
         }
 
+        try{
+            String thumbnail_pic = jo.getString("thumbnail_pic");
+            String original_pic = jo.getString("original_pic");
+            this.original_pic = original_pic;
+            this.thumbnail_pic = thumbnail_pic;
+        }catch(JSONException e){
+            e.printStackTrace();
+            this.thumbnail_pic = null;
+        }
+
     }
 
     public User getUser() {

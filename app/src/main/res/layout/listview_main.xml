@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
     android:padding="16dip">
 
     <LinearLayout
@@ -49,11 +49,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:autoLink="all"
-            android:focusable="false"
             android:id="@+id/listview_main_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="all"
+
+            android:focusable="false"
             android:text="hahhahahahah" />
 
 

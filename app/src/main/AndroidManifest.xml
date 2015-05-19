@@ -36,6 +36,9 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"></activity>
+        <activity
+            android:name=".ImgActivity"
+            android:label="@string/app_name"></activity>
 
 
 
