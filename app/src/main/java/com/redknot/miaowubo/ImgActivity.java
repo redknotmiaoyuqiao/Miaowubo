@@ -25,6 +25,6 @@ public class ImgActivity extends ActionBarActivity {
         String url = getIntent().getStringExtra("img_url");
 
 
-        img.setUrl(url);
+        img.setUrl(url);//
     }
 }
