@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.damiao.network.view.NetWorkDiskCatchImageView;
 import com.damiao.network.view.NetWorkImageView;
 import com.redknot.javabean.Status;
 import com.redknot.javabean.User;

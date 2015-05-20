@@ -9,46 +9,31 @@ import android.widget.ImageView;
 
 import com.damiao.network.http.HttpUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Created by qiaoyao on 15/5/17.
+ * Created by qiaoyao on 15/5/20.
  */
-public class NetWorkImageView extends ImageView {
-
-    private static Map<String, Bitmap> res = new HashMap<String, Bitmap>();
-
-    public NetWorkImageView(Context context, AttributeSet attrs, int defStyle) {
+public class NetWorkNoCatchImageView extends ImageView {
+    public NetWorkNoCatchImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         // TODO Auto-generated constructor stub
     }
 
-    public NetWorkImageView(Context context, AttributeSet attrs) {
+    public NetWorkNoCatchImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // TODO Auto-generated constructor stub
     }
 
-    public NetWorkImageView(Context context) {
+    public NetWorkNoCatchImageView(Context context) {
         super(context);
         // TODO Auto-generated constructor stub
     }
 
     public void setUrl(String url) {
-
-        if(!url.equals("")){
-            Bitmap bitmap = res.get(url);
-
-            if(bitmap != null){
-                this.setImageBitmap(bitmap);
-            }else{
-                MyHandler handler = new MyHandler(url);
-                ImageThread img = new ImageThread(url, handler);
-                new Thread(img).start();
-            }
+        if (!url.equals("")) {
+            MyHandler handler = new MyHandler();
+            ImageThread img = new ImageThread(url, handler);
+            new Thread(img).start();
         }
-
-
     }
 
     private class ImageThread implements Runnable {
@@ -81,26 +66,16 @@ public class NetWorkImageView extends ImageView {
     }
 
     private class MyHandler extends Handler {
-
-        private String url;
-
-        public MyHandler(String url){
-            this.url = url;
-        }
-
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 200) {
                 Bitmap bitmap = (Bitmap) msg.obj;
                 if (bitmap != null) {
-                    NetWorkImageView.this.setImageBitmap(bitmap);
-                    res.put(this.url,bitmap);
+                    NetWorkNoCatchImageView.this.setImageBitmap(bitmap);
                 }
             } else if (msg.what == 400) {
 
             }
         }
     }
-
 }
-

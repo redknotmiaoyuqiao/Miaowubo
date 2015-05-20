@@ -20,16 +20,20 @@ import java.util.Map;
 public class HttpUtil {
 
 
-
-
     public String getRequest(String url, Map<String, String> rawparams) throws Exception {
-        String last = "?";
-        for (String key : rawparams.keySet()) {
-            last = last + key + "=" + rawparams.get(key) + "&";
-        }
-        last = last.substring(0, last.length() - 1);
 
-        url = url + last;
+        if (rawparams == null) {
+
+        } else {
+            String last = "?";
+            for (String key : rawparams.keySet()) {
+                last = last + key + "=" + rawparams.get(key) + "&";
+            }
+            last = last.substring(0, last.length() - 1);
+
+            url = url + last;
+        }
+
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet get = new HttpGet(url);
