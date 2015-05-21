@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.damiao.network.view.NetWorkDiskCatchImageView;
+import com.damiao.network.view.NetWorkDiskCacheImageView;
 import com.damiao.network.view.NetWorkImageView;
 import com.redknot.javabean.Status;
 import com.redknot.javabean.User;
@@ -55,6 +55,7 @@ public class MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = null;
         view = inflater.inflate(R.layout.listview_main, null);
@@ -70,38 +71,10 @@ public class MainAdapter extends BaseAdapter {
         TextView comments_count = (TextView) view.findViewById(R.id.listview_main_comments_count);
         TextView attitudes_count = (TextView) view.findViewById(R.id.listview_main_attitudes_count);
 
-        RelativeLayout listview_main_retweeted_status_layout = (RelativeLayout) view.findViewById(R.id.listview_main_retweeted_status_layout);
-        if (status.getRetweeted_status() == null) {
-            listview_main_retweeted_status_layout.setVisibility(View.INVISIBLE);
-        } else {
-            Status s = status.getRetweeted_status();
-            TextView t = new TextView(this.context);
-            listview_main_retweeted_status_layout.addView(t);
-            listview_main_retweeted_status_layout.setBackgroundColor(Color.rgb(255, 255, 255));
-            listview_main_retweeted_status_layout.setPadding(16, 16, 16, 16);
-            t.setAutoLinkMask(Linkify.ALL);
 
-
-
-            t.setText(s.getUser().getName() + "：" + s.getText());
-        }
-
-        if(status.getThumbnail_pic() != null){
-            listview_main_retweeted_status_layout.setVisibility(View.VISIBLE);
-
-            NetWorkImageView img = new NetWorkImageView(this.context);
-
-            listview_main_retweeted_status_layout.addView(img);
-            img.setUrl(status.getThumbnail_pic());
-
-            img.setOnClickListener(new ImgOnClickListener(status.getOriginal_pic()));
-        }
-
-
-
-
-        NetWorkImageView img = (NetWorkImageView) view.findViewById(R.id.listview_main_img);
+        NetWorkDiskCacheImageView img = (NetWorkDiskCacheImageView) view.findViewById(R.id.listview_main_img);
         img.setUrl(user.getProfile_image_url());
+
 
         text.setText(status.getText());
         created_at.setText(status.getCreated_at());

@@ -47,6 +47,11 @@ public class HttpUtil {
         return res;
     }
 
+    public String postRequest(String url,Map<String,String> rawparams){
+        String res = "";
+        return res;
+    }
+
     public Bitmap loadImage(String url) throws Exception {
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;

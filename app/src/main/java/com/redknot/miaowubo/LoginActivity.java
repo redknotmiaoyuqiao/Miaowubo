@@ -54,11 +54,6 @@ public class LoginActivity extends ActionBarActivity {
                 mSsoHandler.authorize(new AuthListener());
             }
         });
-
-
-
-
-        //mSsoHandler.authorize(new AuthListener());
     }
 
     @Override
