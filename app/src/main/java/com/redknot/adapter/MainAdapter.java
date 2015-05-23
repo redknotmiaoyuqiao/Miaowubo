@@ -55,7 +55,7 @@ public class MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+//
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = null;
         view = inflater.inflate(R.layout.listview_main, null);
