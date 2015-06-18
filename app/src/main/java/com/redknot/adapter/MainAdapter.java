@@ -92,7 +92,7 @@ public class MainAdapter extends BaseAdapter {
 
     private class ImgOnClickListener implements View.OnClickListener{
 
-        private String img;//
+        private String img;////
 
         public ImgOnClickListener(String img){
             this.img = img;
